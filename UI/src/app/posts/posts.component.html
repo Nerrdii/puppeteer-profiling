@@ -1,0 +1,5 @@
+<ol *ngIf="posts$ | async as posts">
+  <li *ngFor="let post of posts">
+    <a [routerLink]="['/posts', post.id]">{{ post.title }}</a>
+  </li>
+</ol>
