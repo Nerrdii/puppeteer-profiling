@@ -9,6 +9,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { MemoryLeakComponent } from './memory-leak/memory-leak.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { LighthouseReportComponent } from './lighthouse-report/lighthouse-report.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
     MemoryLeakComponent,
     PostsComponent,
     PostDetailComponent,
+    LighthouseReportComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],

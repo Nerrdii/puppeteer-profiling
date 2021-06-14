@@ -18,7 +18,7 @@ const puppeteer = require('puppeteer');
   // await client.send('HeapProfiler.startSampling');
 
   for (let i = 0; i < 6; i++) {
-    let selector = '#serviceLeak';
+    let selector = '#memoryLeak';
     await page.waitForSelector(selector);
     await page.click(selector);
 
