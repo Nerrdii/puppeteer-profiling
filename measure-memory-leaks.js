@@ -1,50 +1,48 @@
 const puppeteer = require('puppeteer');
 
-// Helper by @chrisguttandin
-const countObjects = async (page) => {
-  const prototypeHandle = await page.evaluateHandle(() => Object.prototype);
+const countObjects = async (page, prototype) => {
+  const prototypeHandle = await page.evaluateHandle((p) => eval(p), prototype);
   const objectsHandle = await page.queryObjects(prototypeHandle);
-  const numberOfObjects = await page.evaluate(
-    (instances) => instances.length,
-    objectsHandle
-  );
+  const result = await page.evaluate((instances) => {
+    return {
+      count: instances.length,
+      objects: _.countBy(instances, (instance) => instance.constructor.name),
+    };
+  }, objectsHandle);
 
   await Promise.all([prototypeHandle.dispose(), objectsHandle.dispose()]);
 
-  return numberOfObjects;
+  return result;
 };
 
 (async () => {
   const browser = await puppeteer.launch();
-  const context = await browser.createIncognitoBrowserContext();
-  const page = await context.newPage();
+  const page = await browser.newPage();
   const navigationPromise = page.waitForNavigation();
-  await page.goto('http://localhost:4200/posts');
+  await page.goto('http://localhost:4200');
 
   await navigationPromise;
 
-  const numberOfObjects = await countObjects(page);
+  await page.waitForSelector('#home');
+
+  const numberOfObjects = await countObjects(page, 'rxjs.Subscriber.prototype');
   console.log(numberOfObjects);
 
-  // let selector = '#serviceLeak';
-  // await page.waitForSelector(selector);
-  // await page.click(selector);
+  await page.evaluate(async () => {
+    for (let i = 0; i < 7; i++) {
+      let selector = '#memoryLeak';
+      document.querySelector(selector).click();
 
-  // await page.waitForTimeout(1000);
+      selector = '#home';
+      document.querySelector(selector).click();
+    }
+  });
 
-  // selector = '#home';
-  // await page.waitForSelector(selector);
-  // await page.click(selector);
-
-  const numberOfObjectsAfter = await countObjects(page);
+  const numberOfObjectsAfter = await countObjects(
+    page,
+    'rxjs.Subscriber.prototype'
+  );
   console.log(numberOfObjectsAfter);
-
-  await context.close();
-
-  // console.log(await countObjects(page));
-
-  // Check if the number of retained objects is expected
-  // expect(await countObjects(page)).to.equal(0);
 
   await browser.close();
 })();
