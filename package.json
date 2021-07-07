@@ -13,6 +13,7 @@
     "chrome-launcher": "^0.14.0",
     "chrome-remote-interface": "^0.30.0",
     "lighthouse": "^7.5.0",
+    "lodash": "^4.17.21",
     "nyc": "^15.1.0",
     "puppeteer": "^9.1.1",
     "puppeteer-to-istanbul": "^1.4.0",
