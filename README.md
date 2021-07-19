@@ -1,19 +1,24 @@
 # puppeteer-profiling
 
-## Lighthouse Report
+## Getting Started
 
-### Install http-server globally
+```bash
+> npm install
+> cd UI
+> npm install
+> npm start
+```
 
-`npm i -g http-server`
+This will start the Angular app to use with the scripts.
 
-### Build Angular app and serve
+## Running Scripts
 
-`ng build && http-server dist/simple-app --proxy http://localhost:8080?`
+The following scripts are available to run:
 
-### Run script
+* `cpu-profile.js`
+* `heap-profile.js`
+* `heap-snapshot.js`
+* `lighthouse-report.js`
+* `measure-memory-leaks.js`
 
-`node lighthouse-report.js`
-
-Output will be generated in `out/` and can be opened in browser.
-
-To change performance score, go to `memory-leak.component.ts` and comment/uncomment code in `ngOnInit`. Repeat the above steps to view difference.
+These will output their respective files into `out/` directory which can be viewed in Chrome DevTools.
