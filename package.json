@@ -2,9 +2,9 @@
   "name": "puppeteer-profiling",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "report": "nyc report --reporter=html"
+    "watch": "tsc -w",
+    "measure-memory-leaks": "node ./dist/measure-memory-leaks.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "chrome-launcher": "^0.14.0",
     "chrome-remote-interface": "^0.30.0",
+    "heapsnapshot-parser": "^0.1.0",
     "lighthouse": "^7.5.0",
     "lodash": "^4.17.21",
     "nyc": "^15.1.0",
@@ -20,9 +21,9 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.172",
     "@types/node": "^15.12.1",
     "@types/puppeteer": "^5.4.3",
-    "ts-node": "^10.0.0",
     "typescript": "^4.3.2"
   }
 }
