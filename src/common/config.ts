@@ -4,6 +4,7 @@ const DEFAULT_CONFIG: IConfig = {
   iterations: 8,
   url: 'http://localhost:4200/',
   steps: [],
+  timeout: 100,
 };
 
 function getConfigFromSource(configSource: string): IConfig {
@@ -42,12 +43,14 @@ export default class Config implements IConfig {
   public readonly url: string;
   public readonly steps: Step[];
   public readonly iterations: number;
+  public readonly timeout: number;
 
   public static FromSource(configSource: string): Config {
     const raw = getConfigFromSource(configSource);
     checkString('url', raw.url);
     raw.steps.forEach((step, i) => checkStep(i, step));
     checkNumber('iterations', raw.iterations);
+    checkNumber('timeout', raw.timeout);
     return new Config(raw);
   }
 
@@ -55,5 +58,6 @@ export default class Config implements IConfig {
     this.url = raw.url;
     this.steps = raw.steps;
     this.iterations = raw.iterations;
+    this.timeout = raw.timeout;
   }
 }

@@ -7,7 +7,7 @@ import { default as SimpleParser } from './lib/heap-snapshot-parser';
 (async () => {
   const configFileSource = resolve(process.argv[2]);
   const config = Config.FromSource(configFileSource);
-  const { url, iterations, steps } = config;
+  const { url, iterations, steps, timeout } = config;
 
   const browser = await launch();
   const page = await browser.newPage();
@@ -31,7 +31,7 @@ import { default as SimpleParser } from './lib/heap-snapshot-parser';
             await page.evaluate(step.next);
             resolve();
           }
-        }, 1000);
+        }, timeout);
       });
     }
   }
